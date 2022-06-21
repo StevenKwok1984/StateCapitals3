@@ -13,6 +13,12 @@ public class Capital {
         this.squareMileage = squareMileage;
     }
 
+    // Method
+    @Override
+    public String toString() {
+        return this.name + " | Pop: " + this.population + " | Area: " + this.squareMileage + " sq mi";
+    }
+
     public String getName() {
         return name;
     }

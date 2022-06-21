@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class StateCapitalsApp {
 
@@ -20,36 +17,81 @@ public class StateCapitalsApp {
         while(sc.hasNextLine()) {
             String str = sc.nextLine();
             String[] keyValues = str.split("::");
-            String name = keyValues[1];
-            float population = Float.parseFloat(keyValues[2]);
-            float squareMileage = Float.parseFloat(keyValues[3]);
+            // create capital that store data of capital
+            Capital capital = new Capital(
+                    keyValues[1],
+                    Float.parseFloat(keyValues[2]),
+                    Float.parseFloat(keyValues[3]));
             // store value into an array
-            stateCapital.put(keyValues[0], new Capital(name, population, squareMileage));
+            stateCapital.put(keyValues[0], capital);
         }
-        System.out.println(stateCapital.values());
 
+        // print out the entire table
+        printResult(stateCapital);
 
 
         /*
-            Solving remaining TWO questions
-
-        Scanner userSc = new Scanner(System.in);
+           Solving remaining TWO questions
+        */
 
         // Q1 LISTING CAPITALS WITH POPULATIONS GREATER THAN user input
-        System.out.println("Please enter the lower limit for capital city population: ");
-
-        System.out.println();
-        System.out.println("LISTING CAPITALS WITH POPULATIONS GREATER THAN '100':");
-        System.out.println();
+        float greaterThanPop = readValue("Please enter the lower limit for capital city population: ");
+        System.out.println("LISTING CAPITALS WITH POPULATIONS GREATER THAN '"+ greaterThanPop + "':");
+        Map<String, Capital> popFilteredSates = getPopLimitedStates(stateCapital, greaterThanPop);
+        // get Keys
+        printResult(popFilteredSates);
 
 
         // Q2 LISTING CAPITALS WITH AREAS LESS THAN user input:
-        System.out.println("Please enter the upper limit for capital city sq mileage:");
 
+        float smallerThanSM = readValue("Please enter the upper limit for capital city sq mileage:");
+        System.out.println("LISTING CAPITALS WITH AREAS LESS THAN " + smallerThanSM + ":");
+        Map<String, Capital> smFilteredSates = getSmLimitedStates(stateCapital, greaterThanPop);
+        // print result
+        printResult(smFilteredSates);
+
+
+
+
+    }
+
+    public static float readValue(String prompt){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(prompt);
+        float maxNum = scanner.nextFloat();
         System.out.println();
-        System.out.println("LISTING CAPITALS WITH AREAS LESS THAN 150:");
-        */
+        return maxNum;
+    }
 
+    public static void printResult(Map<String, Capital> stateMap) {
+        Set<String> keys = stateMap.keySet();
+
+        for (String k : keys) {
+            System.out.println(k + " - " + stateMap.get(k).toString());
+        }
+        System.out.println();
+    }
+
+    public static Map<String, Capital> getPopLimitedStates(Map<String, Capital>stateMap, float limit) {
+        Map<String, Capital> filteredStates = new HashMap<>();
+
+        stateMap.forEach((key, value) -> {
+            if (value.getPopulation() > limit) {
+                filteredStates.put(key, value);
+            }
+        });
+        return filteredStates;
+    }
+
+    public static Map<String, Capital> getSmLimitedStates(Map<String, Capital>stateMap, float limit) {
+        Map<String, Capital> filteredStates = new HashMap<>();
+
+        stateMap.forEach((key, value) -> {
+            if (value.getSquareMileage() < limit) {
+                filteredStates.put(key, value);
+            }
+        });
+        return filteredStates;
     }
 }
 
