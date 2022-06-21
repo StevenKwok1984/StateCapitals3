@@ -1,13 +1,13 @@
 public class Capital {
     String name;
-    int population;
-    int squareMileage;
+    float population;
+    float squareMileage;
 
     public Capital(){
 
     }
 
-    public Capital(String name, int population, int squareMileage){
+    public Capital(String name, float population, float squareMileage){
         this.name = name;
         this.population = population;
         this.squareMileage = squareMileage;
@@ -21,7 +21,7 @@ public class Capital {
         this.name = name;
     }
 
-    public int getPopulation() {
+    public float getPopulation() {
         return population;
     }
 
@@ -29,7 +29,7 @@ public class Capital {
         this.population = population;
     }
 
-    public int getSquareMileage() {
+    public float getSquareMileage() {
         return squareMileage;
     }
 

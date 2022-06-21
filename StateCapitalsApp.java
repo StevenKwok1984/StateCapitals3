@@ -13,10 +13,26 @@ public class StateCapitalsApp {
         Scanner sc = new Scanner(
                 new BufferedReader(new FileReader("MoreStateCapitals.txt")));
 
-        while(sc.hasNextLine()){
+        System.out.println("50 STATE/CAPITAL PAIRS LOADED.\n" +
+                "==============================");
+
+        while(sc.hasNextLine()) {
             String str = sc.nextLine();
-            String[] keyValuePair = str.split("::");
-            stateCapital.put(keyValuePair[0], keyValuePair[1]);
+            String[] keyValues = str.split("::");
+            String name = keyValues[1];
+            float population = Float.parseFloat(keyValues[2]);
+            float squareMileage = Float.parseFloat(keyValues[3]);
+
+            stateCapital.put(keyValues[0], new Capital(name, population, squareMileage));
         }
+        System.out.println(stateCapital.keySet());
+
+
+
+
+
     }
 }
+
+
+
